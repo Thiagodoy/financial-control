@@ -5,7 +5,7 @@
  */
 package com.personal.financial.filter;
 
-import com.personal.financial.exception.TokenInvalidoException;
+import com.personal.financial.exception.TokenInvalidException;
 import com.personal.financial.service.AuthService;
 import com.personal.financial.utils.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,7 +56,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 throw e;
             } catch (Exception e) {
                 System.out.println("Não foi possivel recuperar o token!");
-                throw new TokenInvalidoException();
+                throw new TokenInvalidException();
             }
         }
 

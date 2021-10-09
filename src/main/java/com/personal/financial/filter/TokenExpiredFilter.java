@@ -2,7 +2,7 @@ package com.personal.financial.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.personal.financial.exception.TokenInvalidoException;
+import com.personal.financial.exception.TokenInvalidException;
 import com.personal.financial.resource.response.AppErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class TokenExpiredFilter extends OncePerRequestFilter {
                     expiredJwtException.getMessage()
             );
             writeResponseErro(error, response);
-        } catch (TokenInvalidoException e) {
+        } catch (TokenInvalidException e) {
             error = new AppErrorResponse(
                     "3.0",
                     APPLICATION_ERROR_002,

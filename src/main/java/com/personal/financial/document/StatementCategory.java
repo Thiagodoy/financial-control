@@ -7,26 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TypeAlias("Statement")
-@Document(value = "statement")
-public class Statement {
-
+@TypeAlias("StatementCategory")
+@Document(value = "category")
+public class StatementCategory {
     @Id
     private String id;
     private String description;
-    private StatementType type;
-    private StatementStatus status;
-    private StatementCategory category;
-    private Double value;
-    private Integer portion;
-    private User createdBy;
-    private LocalDate dueDate;
-    private LocalDate createdAt;
-    private Statement parent;
-
 }

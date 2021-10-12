@@ -5,9 +5,10 @@
  */
 package com.personal.financial.utils;
 
-import br.com.odontoprev.dcmsassociado.dto.AppError;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.personal.financial.resource.response.AppErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -20,10 +21,10 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static br.com.odontoprev.dcmsassociado.dto.ConstantsError.*;
+import static com.personal.financial.utils.ConstantsError.*;
+
 
 /**
- *
  * @author thiag
  */
 @Component
@@ -34,19 +35,19 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        AppError error = new AppError(
+        AppErrorResponse error = new AppErrorResponse(
                 "3.0",
-                ODONTOPREV_ERROR_004,
-                NO_PERMISSION_ERROR_4,
-                DCMS_EXCEPTION,
-                "Acesso negado!",
+                APPLICATION_ERROR_003,
+                ACCESS_DENIED,
+                null,
+                null,
                 authException.getMessage()
         );
         writeResponseErro(error, response);
     }
 
 
-    private void writeResponseErro(AppError error, HttpServletResponse response) {
+    private void writeResponseErro(AppErrorResponse error, HttpServletResponse response) {
         try {
             response.setHeader("Content-Type", "application/json");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());

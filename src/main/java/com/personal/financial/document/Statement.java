@@ -1,5 +1,7 @@
 package com.personal.financial.document;
 
+import com.personal.financial.utils.StatementStatus;
+import com.personal.financial.utils.StatementType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

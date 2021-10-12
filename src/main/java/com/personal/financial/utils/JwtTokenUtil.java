@@ -5,7 +5,7 @@
  */
 package com.personal.financial.utils;
 
-import br.com.odontoprev.dcmsassociado.model.SecurityResponse;
+import com.personal.financial.resource.response.SecurityResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- *
  * @author thiag
  */
 @Component
@@ -58,11 +57,10 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public SecurityResponse generateToken(String carterinhaOuCpf) {
+    public SecurityResponse generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, carterinhaOuCpf);
+        return doGenerateToken(claims, email);
     }
-
 
 
     private SecurityResponse doGenerateToken(Map<String, Object> claims, String subject) {
@@ -78,14 +76,13 @@ public class JwtTokenUtil implements Serializable {
                 .builder()
                 .token(token)
                 .dateTimeExpiresIn(simpleDateFormat.format(dateExpires))
-                .expiresIn(expires/ (1000 * 60))
+                .expiresIn(expires / (1000 * 60))
                 .build();
 
     }
 
-
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String associadoOuCpf = getUsernameFromToken(token);
-        return (associadoOuCpf.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String email = getUsernameFromToken(token);
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

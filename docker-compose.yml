@@ -1,0 +1,47 @@
+version: "3.5"
+
+services:
+  api-database:
+    image: mongo
+    container_name: "financial-mongo-db"
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: financial
+      MONGO_INITDB_ROOT_PASSWORD: e296cd9f
+    volumes:
+#      - mongodb-data:/data/db
+      - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    networks:
+      - financial-network
+  app:
+    image: personal/${PROJECT_NAME}:latest
+    container_name: ${PROJECT_NAME}
+    build: .
+    env_file: .env
+    restart: always
+    hostname: rede-credenciada-mongo
+    tty: true
+    cap_add:
+      - ALL
+    ports:
+      - 8961:8961
+      - 5005:5005
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    networks:
+      - financial-network
+    deploy:
+      resources:
+        limits:
+          memory: 1500M
+    links:
+      - api-database
+    depends_on:
+      - api-database
+networks:
+  financial-network:
+    driver: bridge
+#volumes:
+#  api-database:
+#    external: true

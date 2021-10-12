@@ -10,6 +10,9 @@ public interface ConstantsError {
     String APPLICATION_ERROR_002 = "APPLICATION-ERROR-002";
     String INVALID_TOKEN = "Token is invalid";
 
+    String APPLICATION_ERROR_003 = "APPLICATION-ERROR-003";
+    String ACCESS_DENIED = "Access Denied!!!";
+
 
 
 }

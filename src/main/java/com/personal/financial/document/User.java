@@ -13,7 +13,7 @@ import java.util.Collection;
 @Data
 @TypeAlias("User")
 @Document(value = "user")
-public class User implements UserDetails {
+public class User implements UserDetails, com.personal.financial.document.Document {
 
 
     @Id

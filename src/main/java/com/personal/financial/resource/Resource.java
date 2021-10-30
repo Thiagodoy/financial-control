@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Resource<I extends Request, O extends Response, M extends Mapper, S extends Service> {
 
     private final M mapper;
@@ -20,10 +24,23 @@ public class Resource<I extends Request, O extends Response, M extends Mapper, S
     }
 
     @PostMapping
-    public ResponseEntity<O> save(I request) {
+    public ResponseEntity<O> save(@RequestBody I request, Principal principal) {
         Document document = mapper.toDocument(request);
+        document.setUser(principal);
         Response response = mapper.toResponse(service.save(document));
         return (ResponseEntity<O>) ResponseEntity.ok(response);
+    }
+
+    @PostMapping("list")
+    public ResponseEntity<?> save(@RequestBody List<I> request, Principal principal) {
+
+        List<Response> response = request.stream().map(mapper::toDocument).map(document -> {
+                    document.setUser(principal);
+                    return service.save(document);
+                }).map(mapper::toResponse)
+                .collect(Collectors.toList());
+
+        return  ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")

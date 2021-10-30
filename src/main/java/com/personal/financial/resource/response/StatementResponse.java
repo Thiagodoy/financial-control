@@ -1,14 +1,19 @@
-package com.personal.financial.resource.request;
+package com.personal.financial.resource.response;
 
 import com.personal.financial.document.StatementCategory;
 import com.personal.financial.utils.StatementStatus;
 import com.personal.financial.utils.StatementType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-public class StatementRequest implements Request {
+@AllArgsConstructor
+@NoArgsConstructor
+public class StatementResponse implements Response {
+
     private String id;
     private String description;
     private StatementType type;
@@ -17,5 +22,6 @@ public class StatementRequest implements Request {
     private Double value;
     private Integer portion;
     private LocalDate dueDate;
+    private LocalDate createdAt;
 
 }

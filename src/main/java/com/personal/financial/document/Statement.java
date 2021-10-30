@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 @Data
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @TypeAlias("Statement")
 @Document(value = "statement")
-public class Statement {
+public class Statement implements com.personal.financial.document.Document {
 
     @Id
     private String id;
@@ -31,4 +32,8 @@ public class Statement {
     private LocalDate createdAt;
     private Statement parent;
 
+    @Override
+    public void setUser(Principal principal) {
+        this.createdBy = ((User) principal);
+    }
 }

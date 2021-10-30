@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -58,5 +59,10 @@ public class User implements UserDetails, com.personal.financial.document.Docume
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public void setUser(Principal principal) {
+
     }
 }
